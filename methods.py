@@ -15,6 +15,15 @@ def get_score_addr(score_address):
 	global SCORE_ADDRESS
 	SCORE_ADDRESS = score_address
 
+def get_icon_service(service):
+	global icon_service
+	service_dict = {
+			"yeouido": IconService(HTTPProvider("https://bicon.net.solidwallet.io",3)),
+			"euljiro": IconService(HTTPProvider("https://test-ctz.solidwallet.io", 2)),
+			"pagoda": IconService(HTTPProvider("https://zicon.net.solidwallet.io",3)),
+			"mainnet": IconService(HTTPProvider("https://ctz.solidwallet.io", 3))
+		}
+	icon_service = service_dict[service]
 
 def external(fn_name: str, wallet, params=None):
 	call_transaction = CallTransactionBuilder()\

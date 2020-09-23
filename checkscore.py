@@ -1,7 +1,7 @@
 from iconsdk.icon_service import IconService
 from iconsdk.providers.http_provider import HTTPProvider
 from IPython.core.getipython import get_ipython
-from .methods import get_score_addr
+from .methods import get_score_addr, get_icon_service
 import requests
 import json
 
@@ -10,9 +10,25 @@ icon_service = IconService(HTTPProvider("https://bicon.net.solidwallet.io",3))
 
 class Checkscore(object):
 
-	def __init__(self, score_address):
+	def __init__(self, score_address, service: str = "yeouido"):
 		super(Checkscore, self).__init__()
 		get_score_addr(score_address)
+		service_dict = {
+			"yeouido": IconService(HTTPProvider("https://bicon.net.solidwallet.io",3)),
+			"euljiro": IconService(HTTPProvider("https://test-ctz.solidwallet.io", 2)),
+			"pagoda": IconService(HTTPProvider("https://zicon.net.solidwallet.io",80)),
+			"mainnet": IconService(HTTPProvider("https://ctz.solidwallet.io", 3))
+		}
+		if service == "euljiro":
+			icon_service = service_dict["euljiro"]
+		elif service == "pagoda":
+			icon_service = service_dict["pagoda"]
+		elif service == "mainnet":
+			icon_service = service_dict["mainnet"]
+		else:
+			icon_service = service_dict["yeouido"]
+
+		get_icon_service(service)	
 		self.score_apis = icon_service.get_score_api(score_address)
 
 	def fill_methods(self):
