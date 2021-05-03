@@ -1,0 +1,11 @@
+LICENSE
+README.md
+setup.py
+checkscore/__init__.py
+checkscore/checkscore.py
+checkscore/methods.py
+checkscore/repeater.py
+checkscore.egg-info/PKG-INFO
+checkscore.egg-info/SOURCES.txt
+checkscore.egg-info/dependency_links.txt
+checkscore.egg-info/top_level.txt

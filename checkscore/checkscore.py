@@ -13,20 +13,16 @@ class Checkscore(object):
 	def __init__(self, score_address, service: str = "yeouido"):
 		super(Checkscore, self).__init__()
 		get_score_addr(score_address)
-		service_dict = {
-			"yeouido": IconService(HTTPProvider("https://bicon.net.solidwallet.io",3)),
-			"euljiro": IconService(HTTPProvider("https://test-ctz.solidwallet.io", 2)),
-			"pagoda": IconService(HTTPProvider("https://zicon.net.solidwallet.io",80)),
-			"mainnet": IconService(HTTPProvider("https://ctz.solidwallet.io", 3))
-		}
-		if service == "euljiro":
-			icon_service = service_dict["euljiro"]
-		elif service == "pagoda":
-			icon_service = service_dict["pagoda"]
+		if service == "pagoda":
+			icon_service = IconService(HTTPProvider("https://zicon.net.solidwallet.io",3))
+		elif service == "euljiro":
+			icon_service = IconService(HTTPProvider("https://test-ctz.solidwallet.io", 3))
 		elif service == "mainnet":
-			icon_service = service_dict["mainnet"]
+			icon_service = IconService(HTTPProvider("https://ctz.solidwallet.io", 3))
+		elif service == "local":
+			icon_service = IconService(HTTPProvider("http://localhost:9000/", 3))
 		else:
-			icon_service = service_dict["yeouido"]
+			icon_service = IconService(HTTPProvider("https://bicon.net.solidwallet.io",3))
 
 		get_icon_service(service)	
 		self.score_apis = icon_service.get_score_api(score_address)
