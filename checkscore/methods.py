@@ -8,19 +8,44 @@ from .repeater import retry
 
 
 SCORE_ADDRESS = ''
-icon_service = IconService(HTTPProvider("https://bicon.net.solidwallet.io",3))
+icon_service = IconService(HTTPProvider("https://berlin.net.solidwallet.io",3))
 RANDOM_ADDRESS = 'hx8b94a3792f336b71937709dae5487166c180c87a'
+NID = 3
 
 def get_score_addr(score_address):
 	global SCORE_ADDRESS
 	SCORE_ADDRESS = score_address
 
+def get_icon_service(service, endpoint, nid):
+	global icon_service
+	global NID
+
+	if service == "berlin":
+		icon_service = IconService(HTTPProvider("https://berlin.net.solidwallet.io", 3))
+		NID = 7
+	elif service == "lisbon":
+		icon_service = IconService(HTTPProvider("https://lisbon.net.solidwallet.io", 3))
+		NID = 2
+	elif service == "sejong":
+		icon_service = IconService(HTTPProvider("https://sejong.net.solidwallet.io", 3))
+		NID = 83
+	elif service == "lisbon":
+		icon_service = IconService(HTTPProvider("https://test-ctz.solidwallet.io", 3))
+		NID = 2
+	elif service == "mainnet":
+		icon_service = IconService(HTTPProvider("https://ctz.solidwallet.io", 3))
+		NID = 1
+	elif service == "local":
+		icon_service = IconService(HTTPProvider("http://localhost:9000/", 3))
+	else:
+		icon_service = IconService(HTTPProvider(endpoint,3))
+		NID = nid
 
 def external(fn_name: str, wallet, params=None):
 	call_transaction = CallTransactionBuilder()\
 			    .from_(wallet.get_address())\
 			    .to(SCORE_ADDRESS)\
-			    .nid(3)\
+			    .nid(NID)\
 			    .nonce(100)\
 			    .method(fn_name)\
 			    .params(params)\
@@ -32,7 +57,7 @@ def payable(fn_name: str, wallet, value, params=None):
 	call_transaction = CallTransactionBuilder()\
 			    .from_(wallet.get_address())\
 			    .to(SCORE_ADDRESS)\
-			    .nid(3)\
+			    .nid(NID)\
 			    .nonce(100)\
 			    .value(value)\
 			    .method(fn_name)\

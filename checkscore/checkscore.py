@@ -1,18 +1,32 @@
 from iconsdk.icon_service import IconService
 from iconsdk.providers.http_provider import HTTPProvider
 from IPython.core.getipython import get_ipython
-from .methods import get_score_addr
+from .methods import get_score_addr, get_icon_service
 import requests
 import json
 
 shell = get_ipython()
-icon_service = IconService(HTTPProvider("https://bicon.net.solidwallet.io",3))
+icon_service = IconService(HTTPProvider("https://berlin.net.solidwallet.io",3))
 
 class Checkscore(object):
 
-	def __init__(self, score_address):
+	def __init__(self, score_address, service: str = "berlin", endpoint: str = "", nid: int = 0):
 		super(Checkscore, self).__init__()
 		get_score_addr(score_address)
+		if service == "berlin":
+			icon_service = IconService(HTTPProvider("https://berlin.net.solidwallet.io",3))
+		elif service == "lisbon":
+			icon_service = IconService(HTTPProvider("https://lisbon.net.solidwallet.io", 3))
+		elif service == "sejong":
+			icon_service = IconService(HTTPProvider("https://sejong.net.solidwallet.io", 3))
+		elif service == "mainnet":
+			icon_service = IconService(HTTPProvider("https://ctz.solidwallet.io", 3))
+		elif service == "local":
+			icon_service = IconService(HTTPProvider("http://localhost:9000/", 3))
+		else:
+			icon_service = IconService(HTTPProvider(endpoint,3))
+
+		get_icon_service(service, endpoint, nid)	
 		self.score_apis = icon_service.get_score_api(score_address)
 
 	def fill_methods(self):
