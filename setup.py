@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="checkscore", # Replace with your own username
-    version="0.1.8",
+    version="0.2.0",
     author="Newton Poudel",
     author_email="hinewton25@gmail.com",
     description="A package to auto fill methods in jupyter notebook for SCORE interaction.",
